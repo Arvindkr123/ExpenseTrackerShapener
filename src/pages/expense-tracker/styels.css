@@ -1,0 +1,144 @@
+.expense_tracker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #023047;
+  margin-top: 1rem;
+}
+
+.heading {
+  text-transform: capitalize;
+  color: blueviolet;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.balance {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 5px;
+  border: 1px solid #bbb;
+  margin: 20px;
+  border-radius: 5px;
+}
+
+.balance h2 {
+  color: green;
+}
+
+.summary {
+  display: flex;
+  gap: 30px;
+  border: 1px solid #ccc;
+  align-items: center;
+  justify-content: center;
+  margin: 20px;
+  padding: 0 30px;
+  border-radius: 5px;
+}
+
+.income h4 {
+  color: green;
+}
+
+.expenses h4 {
+  color: red;
+}
+
+.add-transaction {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+input {
+  padding: 5px;
+}
+
+.form-btn {
+  padding: 5px;
+  background-color: green;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  border: none;
+}
+
+.form-btn:hover {
+  background: rgb(84, 215, 84);
+  color: white;
+}
+
+.profile {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+}
+
+.signOut {
+  padding: 5px;
+  background-color: green;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  border: none;
+}
+
+.signOut:hover {
+  background: rgb(84, 215, 84);
+  color: white;
+}
+
+.profile_photo {
+  width: 200px;
+  object-fit: contain;
+  border-radius: 50%;
+}
+
+.transactions {
+  width: 800px;
+  margin: 1rem auto;
+}
+
+.p {
+  text-align: center;
+  font-size: 30px;
+  font-weight: bold;
+  border-bottom: 3px solid #eee;
+  color: red;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+}
+
+.list li {
+  list-style: none;
+  display: flex;
+  gap: 50px;
+  margin-top: 10px;
+  border-bottom: 1px solid black;
+  align-items: center;
+  padding: 0 20px;
+}
+
+.dbtn{
+  padding: 5px;
+  cursor: pointer;
+  background-color: rgb(227, 60, 60);
+  border: none;
+  color: white;
+  border-radius: 5px;
+}

@@ -1,14 +1,23 @@
 import React, { useState } from "react";
 import { useAddTransactions } from "../../hooks/useAddTransactions";
 import useGetTransactions from "../../hooks/useGetTransactions";
+import "./styels.css";
+import useGetUserInfo from "../../hooks/useGetUserInfo";
+import { signOut } from "firebase/auth";
+import { auth } from "../../config/firebaseConfig";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const ExpenseTracker = () => {
   const [description, setDescription] = useState("");
   const [transactionAmount, setTransactionAmount] = useState(0);
   const [transactionType, setTransactionType] = useState("expense");
   const { addTransaction } = useAddTransactions();
-  const { transactions } = useGetTransactions();
-  console.log(transactions);
+  const { name, profilePhoto } = useGetUserInfo();
+  const navigate = useNavigate();
+
+  const { transactions, transactionsTotal } = useGetTransactions();
+  // console.log(transactions);
   const SubmitHandler = (e) => {
     e.preventDefault();
     addTransaction({
@@ -16,24 +25,42 @@ const ExpenseTracker = () => {
       transactionAmount,
       transactionType,
     });
+    setDescription("");
+    toast.success("Added transaction successfully");
+    setTransactionAmount(0);
+  };
+
+  const SignOutHandler = async () => {
+    try {
+      await signOut(auth);
+      localStorage.removeItem("auth");
+      toast.success("logged out successfully");
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <>
-      <div className="expense-tracker">
+      <div className="expense_tracker">
         <div className="container">
-          <h1>Expense Tracker</h1>
+          <h1 className="heading">{name}'s Expense Tracker</h1>
           <div className="balance">
             <h3>Your Balance</h3>
-            <h2>Rs 0.0</h2>
+            {transactionsTotal.balance > 0 ? (
+              <h2> Rs {transactionsTotal.balance}</h2>
+            ) : (
+              <h2> -Rs {transactionsTotal.balance * -1}</h2>
+            )}
           </div>
           <div className="summary">
             <div className="income">
               <h4>Income</h4>
-              <p>Rs 0.0</p>
+              <p>Rs {transactionsTotal.income}</p>
             </div>
             <div className="expenses">
               <h4>Expenses</h4>
-              <p>Rs 0.0</p>
+              <p>Rs {transactionsTotal.expense}</p>
             </div>
           </div>
           <form onSubmit={SubmitHandler} className="add-transaction">
@@ -67,26 +94,40 @@ const ExpenseTracker = () => {
               checked={transactionType === "income"}
             />
             <label htmlFor="income">Income</label>
-            <button type="submit">Add Transaction</button>
+            <button className="form-btn" type="submit">
+              Add Transaction
+            </button>
           </form>
         </div>
+
+        {profilePhoto && (
+          <div className="profile">
+            <img src={profilePhoto} className="profile_photo" />
+            <button className="signOut" onClick={SignOutHandler}>
+              SignOut
+            </button>
+          </div>
+        )}
       </div>
-      <div>Transactions</div>
-      <ul>
-        {transactions.map((ele) => {
-          const { description, transactionAmount, transactionType } = ele;
-          console.log(ele);
-          return (
-            <li>
-              <h3>{description}</h3>
-              <p>
-                $ {transactionAmount} .{" "}
-                <label htmlFor="">{transactionType}</label>
-              </p>
-            </li>
-          );
-        })}
-      </ul>
+      <div className="transactions">
+        <p className="p">Transactions</p>
+        <ul className="list">
+          {transactions.map((ele, i) => {
+            const { description, transactionAmount, transactionType } = ele;
+            //console.log(ele);
+            return (
+              <li key={i}>
+                <h3>{description}</h3>
+                <p>
+                  {transactionAmount}Rs .{" "}
+                  <label style={transactionType==="income"?{color:"green"}:{color:"red"}} htmlFor="">{transactionType}</label>
+                </p>
+                <button className="dbtn">Delete</button>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
     </>
   );
 };
