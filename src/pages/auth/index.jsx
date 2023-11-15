@@ -3,6 +3,8 @@ import React from "react";
 import { auth, provider } from "../../config/firebaseConfig";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { FaGoogle } from "react-icons/fa";
+import "./styels.css";
 
 const Auth = () => {
   const navigate = useNavigate();
@@ -20,9 +22,21 @@ const Auth = () => {
   };
   return (
     <div className="login-page">
-      <h1>Sign In with google to continue..</h1>
+      <p>Sign In with google to continue..</p>
       <button className="login-btn" onClick={signWithGoogle}>
-        sign in with Google
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "10px",
+          }}
+        >
+          <span>
+            <FaGoogle />
+          </span>
+          <span>sign in with Google</span>
+        </div>
       </button>
     </div>
   );
